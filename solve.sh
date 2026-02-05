@@ -55,4 +55,4 @@ get_tier_name() {
 }
 TIER_NAME=$(get_tier_name $TIER_NUM)
 
-echo "📊 현재 상태: $TIER_NAME ($RATING) | $SOLVED_COUNT 문제 해결 | $RANK 위"
+echo "📊 현재 상태: $TIER_NAME ($RATING) | $SOLVED_COUNT 문제 해결 | ${RANK}위"
