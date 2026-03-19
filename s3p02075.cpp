@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <queue>
+#include <tuple>
 using namespace std;
 
 int main() {
@@ -10,18 +11,28 @@ int main() {
     int N;
     cin >> N;
 
-    priority_queue<int, vector<int>, greater<> > min_heap;
-    for (int i = 0; i < N * N; i++) {
-        int input;
-        cin >> input;
-        if (min_heap.size() == N) {
-            if (min_heap.top() > input) continue;
-            else min_heap.pop();
+    vector<vector<int> > matrix(N, vector<int>(N, 0));
+
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            cin >> matrix[i][j];
         }
-        min_heap.push(input);
     }
 
-    cout << min_heap.top();
+    typedef tuple<int, int, int> T;
+
+    priority_queue<T> pq;
+
+    for (int j = 0; j < N; j++)
+        pq.emplace(matrix[N - 1][j], N - 1, j);
+
+    for (int i = 0; i < N - 1; i++) {
+        auto [v, x, y] = pq.top();
+        pq.pop();
+        if (x > 0) pq.emplace(matrix[x - 1][y], x - 1, y);
+    }
+
+    cout << get<0>(pq.top());
 
     return 0;
 }
